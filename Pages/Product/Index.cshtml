@@ -1,0 +1,81 @@
+﻿@page
+@model ASP.NET_Core_HW4.Pages.Product.IndexModel
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.Info != "")
+{
+    <div class="alert alert-success" role="alert">
+        @Model.Info
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">#</th>
+            <th scope="col">#</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td scope="row">@item.Id</td>
+                <td scope="row">@item.Name</td>
+                <td scope="row">@item.Price</td>
+                <td scope="row">
+                    <form method="post" asp-page-handler="Edit">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-outline-warning">Edit</button>
+                    </form>
+                </td>
+                <td scope="row">
+                    <form method="post" asp-page-handler="Delete">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.EditProduct == null)
+{
+    <form class="col-5" method="post">
+        <div class="mb-3">
+            <label class="form-label">Product Name</label>
+            <input asp-for="Product.Name" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Product Price</label>
+            <input asp-for="Product.Price" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Add New Product</button>
+    </form>
+}
+
+@if (Model.EditProduct != null)
+{
+    <form class="col-5" method="post" asp-page-handler="Update">
+        <input type="hidden" asp-for="EditProduct.Id" />
+        <div class="mb-3">
+            <label class="form-label">Product Name</label>
+            <input asp-for="EditProduct.Name" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Product Price</label>
+            <input asp-for="EditProduct.Price" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Update Product</button>
+    </form>
+}  

@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model ProductCategoryListViewModel
+
+<h1>Products</h1>
+
+@if (Model.Products != null)
+{
+    @foreach (var item in Model.Products)
+    {
+        <h2>Name: @item.Name</h2>
+        <h2>Price: @item.Price$</h2>
+    }
+}
+<hr />
